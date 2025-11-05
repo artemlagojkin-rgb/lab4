@@ -108,6 +108,18 @@ public class Abiturient {
         return false;
     }
     
+    // РЕФАКТОРИНГ: Добавлен метод для проверки отличных оценок
+    public boolean hasExcellentGrades() {
+        if (grades == null) return false;
+        
+        for (int grade : grades) {
+            if (grade != 5) {
+                return false;
+            }
+        }
+        return !(grades.length == 0);
+    }
+    
     // Метод toString
     @Override
     public String toString() {
