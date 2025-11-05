@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<animeCollection>
+    <TVSeries>
+        <seasons>1</seasons>
+        <genres>Action, Adventure, Fantasy</genres>
+        <rating>8.9</rating>
+        <episodes>24</episodes>
+        <releaseDate>2020-04-05</releaseDate>
+    </TVSeries>
+    <TVSeries>
+        <seasons>1</seasons>
+        <genres>Drama, Romance</genres>
+        <rating>7.8</rating>
+        <episodes>12</episodes>
+        <releaseDate>2019-07-12</releaseDate>
+    </TVSeries>
+    <TVSeries>
+        <seasons>1</seasons>
+        <genres>Slice of Life, Comedy</genres>
+        <rating>8.2</rating>
+        <episodes>13</episodes>
+        <releaseDate>2021-01-10</releaseDate>
+    </TVSeries>
+    <TVSeries>
+        <seasons>2</seasons>
+        <genres>Sci-Fi, Action</genres>
+        <rating>8.7</rating>
+        <episodes>26</episodes>
+        <releaseDate>2018-10-01</releaseDate>
+    </TVSeries>
+    <ONA>
+        <platform>Netflix</platform>
+        <genres>Fantasy, Mystery</genres>
+        <rating>8.1</rating>
+        <episodes>8</episodes>
+        <releaseDate>2023-12-15</releaseDate>
+    </ONA>
+    <ONA>
+        <platform>Crunchyroll</platform>
+        <genres>School, Comedy</genres>
+        <rating>7.5</rating>
+        <episodes>10</episodes>
+        <releaseDate>2022-09-20</releaseDate>
+    </ONA>
+    <ONA>
+        <platform>Amazon Prime</platform>
+        <genres>Action, Supernatural</genres>
+        <rating>8.4</rating>
+        <episodes>12</episodes>
+        <releaseDate>2023-11-05</releaseDate>
+    </ONA>
+    <TVSeries>
+        <seasons>1</seasons>
+        <genres>Action, Mecha</genres>
+        <rating>7.9</rating>
+        <episodes>6</episodes>
+        <releaseDate>2021-05-10</releaseDate>
+    </TVSeries>
+    <TVSeries>
+        <seasons>1</seasons>
+        <genres>Drama, Romance</genres>
+        <rating>8.0</rating>
+        <episodes>4</episodes>
+        <releaseDate>2022-12-01</releaseDate>
+    </TVSeries>
+    <TVSeries>
+        <seasons>1</seasons>
+        <genres>Comedy, Ecchi</genres>
+        <rating>6.8</rating>
+        <episodes>3</episodes>
+        <releaseDate>2020-08-15</releaseDate>
+    </TVSeries>
+</animeCollection>
