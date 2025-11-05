@@ -3,20 +3,13 @@ import java.util.Set;
 
 /**
  * Класс для представления аниме-сериалов
+ * РЕФАКТОРИНГ: Добавлены методы для работы с сезонами
  * @author Artem
- * @version 1.0
+ * @version 2.0
  */
 public class TVSeries extends Anime {
     private int seasons;
     
-    /**
-     * Конструктор TVSeries
-     * @param genres жанры
-     * @param rating рейтинг
-     * @param episodes количество серий
-     * @param releaseDate дата выхода
-     * @param seasons количество сезонов
-     */
     public TVSeries(Set<String> genres, double rating, int episodes, 
                    LocalDate releaseDate, int seasons) {
         super(genres, rating, episodes, releaseDate);
@@ -25,6 +18,22 @@ public class TVSeries extends Anime {
     
     public int getSeasons() { return seasons; }
     public void setSeasons(int seasons) { this.seasons = seasons; }
+    
+    /**
+     * РЕФАКТОРИНГ: Проверяет, является ли сериал многосезонным
+     * @return true если количество сезонов больше 1
+     */
+    public boolean isMultiSeason() {
+        return seasons > 1;
+    }
+    
+    /**
+     * РЕФАКТОРИНГ: Рассчитывает среднее количество эпизодов на сезон
+     * @return среднее количество эпизодов
+     */
+    public double getEpisodesPerSeason() {
+        return (double) getEpisodes() / seasons;
+    }
     
     @Override
     public String toString() {
