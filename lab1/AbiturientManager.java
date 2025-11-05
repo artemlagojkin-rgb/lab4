@@ -1,16 +1,22 @@
 package lab1;
 
-import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.ArrayList;
 
 public class AbiturientManager {
-    private Abiturient[] abiturients;
+    // РЕФАКТОРИНГ: Замена массива на репозиторий для улучшения управления данными
+    private Repository<Abiturient> repository;
 
     // Конструктор
     public AbiturientManager(Abiturient[] abiturients) {
-        this.abiturients = abiturients;
+        // РЕФАКТОРИНГ: Инициализация репозитория и заполнение его переданными абитуриентами
+        this.repository = new Repository<>();
+        for (Abiturient a : abiturients) {
+            repository.add(a);
+        }
     }
 
     // Метод для создания массива абитуриентов с вводом от пользователя
@@ -32,16 +38,15 @@ public class AbiturientManager {
     // a) Список абитуриентов с неудовлетворительными оценками
     public void printAbiturientsWithUnsatisfactoryGrades() {
         System.out.println("\n=== Абитуриенты с неудовлетворительными оценками ===");
-        boolean found = false;
-
-        for (Abiturient abiturient : abiturients) {
-            if (abiturient.hasUnsatisfactoryGrades()) {
+        
+        // РЕФАКТОРИНГ: Использование метода find репозитория вместо ручной фильтрации
+        List<Abiturient> unsatisfactoryAbiturients = repository.find(Abiturient::hasUnsatisfactoryGrades);
+        
+        if (!unsatisfactoryAbiturients.isEmpty()) {
+            for (Abiturient abiturient : unsatisfactoryAbiturients) {
                 System.out.println(abiturient);
-                found = true;
             }
-        }
-
-        if (!found) {
+        } else {
             System.out.println("Абитуриентов с неудовлетворительными оценками не найдено.");
         }
     }
@@ -49,16 +54,15 @@ public class AbiturientManager {
     // b) Список абитуриентов со средним баллом выше заданного
     public void printAbiturientsWithAverageAbove(double threshold) {
         System.out.println("\n=== Абитуриенты со средним баллом выше " + threshold + " ===");
-        boolean found = false;
-
-        for (Abiturient abiturient : abiturients) {
-            if (abiturient.getAverageGrade() > threshold) {
+        
+        // РЕФАКТОРИНГ: Использование лямбда-выражения для фильтрации
+        List<Abiturient> highAchievers = repository.find(a -> a.getAverageGrade() > threshold);
+        
+        if (!highAchievers.isEmpty()) {
+            for (Abiturient abiturient : highAchievers) {
                 System.out.println(abiturient);
-                found = true;
             }
-        }
-
-        if (!found) {
+        } else {
             System.out.println("Абитуриентов со средним баллом выше " + threshold + " не найдено.");
         }
     }
@@ -67,18 +71,20 @@ public class AbiturientManager {
     public void printTopNAbiturients(int n) {
         System.out.println("\n=== " + n + " абитуриентов с самым высоким средним баллом ===");
 
-        // Сортируем абитуриентов по убыванию среднего балла
-        Abiturient[] sortedAbiturients = abiturients.clone();
-        Arrays.sort(sortedAbiturients, (a1, a2) -> Double.compare(a2.getAverageGrade(), a1.getAverageGrade()));
+        // РЕФАКТОРИНГ: Замена массива на список из репозитория и использование ArrayList для сортировки
+        List<Abiturient> sortedAbiturients = new ArrayList<>(repository.getAll());
+        
+        // РЕФАКТОРИНГ: Улучшена сортировка с использованием Comparator
+        sortedAbiturients.sort((a1, a2) -> Double.compare(a2.getAverageGrade(), a1.getAverageGrade()));
 
         // Выводим топ n абитуриентов
-        for (int i = 0; i < Math.min(n, sortedAbiturients.length); i++) {
-            System.out.println((i + 1) + ". " + sortedAbiturients[i]);
+        for (int i = 0; i < Math.min(n, sortedAbiturients.size()); i++) {
+            System.out.println((i + 1) + ". " + sortedAbiturients.get(i));
         }
 
         // Определяем полупроходной балл (балл последнего из выбранных)
-        if (n <= sortedAbiturients.length) {
-            double semiPassingGrade = sortedAbiturients[n - 1].getAverageGrade();
+        if (n <= sortedAbiturients.size() && n > 0) {
+            double semiPassingGrade = sortedAbiturients.get(n - 1).getAverageGrade();
             System.out.println("\n=== Абитуриенты с полупроходным баллом (" +
                     String.format("%.2f", semiPassingGrade) + ") ===");
 
@@ -93,8 +99,21 @@ public class AbiturientManager {
     // Метод для вывода всех абитуриентов
     public void printAllAbiturients() {
         System.out.println("\n=== Все абитуриенты ===");
-        for (Abiturient abiturient : abiturients) {
-            System.out.println(abiturient);
+        // РЕФАКТОРИНГ: Замена массива на список из репозитория
+        List<Abiturient> allAbiturients = repository.getAll();
+        for (int i = 0; i < allAbiturients.size(); i++) {
+            System.out.println((i + 1) + ". " + allAbiturients.get(i));
+        }
+    }
+
+    // РЕФАКТОРИНГ: Добавлен метод для демонстрации работы репозитория
+    public void demonstrateRepositoryOperations() {
+        System.out.println("\n=== Демонстрация операций репозитория ===");
+        System.out.println("Текущее количество абитуриентов в репозитории: " + repository.size());
+        
+        if (repository.size() > 0) {
+            Abiturient first = repository.get(0);
+            System.out.println("Первый абитуриент в репозитории: " + first);
         }
     }
 
@@ -133,6 +152,9 @@ public class AbiturientManager {
 
             // Выводим всех абитуриентов
             manager.printAllAbiturients();
+
+            // Демонстрация работы репозитория
+            manager.demonstrateRepositoryOperations();
 
             // a) Абитуриенты с неудовлетворительными оценками
             manager.printAbiturientsWithUnsatisfactoryGrades();
